@@ -1087,9 +1087,9 @@ void CScenario::LoadTriggerVolumes()
 
   if(m_Header.TriggerVolumes.Count > 0)
   {
-    m_pTriggerVolumes = new TRIGGER_VOLUMES[m_Header.TriggerVolumes.Count];
+    m_pTriggerVolumes = new TRIGGER_VOLUME[m_Header.TriggerVolumes.Count];
     m_pMapFile->Seek(m_Header.TriggerVolumes.Offset, 0);
-    m_pMapFile->Read(m_pTriggerVolumes, sizeof(TRIGGER_VOLUMES)*m_Header.TriggerVolumes.Count);
+    m_pMapFile->Read(m_pTriggerVolumes, sizeof(TRIGGER_VOLUME)*m_Header.TriggerVolumes.Count);
   }
 
   //Trigger Volumes are a special case
@@ -1518,9 +1518,9 @@ CString CScenario::GetModelDescription(SELECTION_MODE sel_mode, int index)
   return(desc);
 }
 
-void CScenario::GetTriggerVolume(int index, BOUNDING_BOX *pBox)
+void CScenario::GetTriggerVolume(int index, TRIGGER_VOLUME *pTrigger)
 {
-  memcpy(pBox, &m_pTriggerVolumes[index].box, sizeof(BOUNDING_BOX));
+  memcpy(pTrigger, &m_pTriggerVolumes[index], sizeof(TRIGGER_VOLUME));
 }
 
 int CScenario::GetPalletteCount(SELECTION_MODE sel_mode)

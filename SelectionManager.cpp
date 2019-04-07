@@ -504,7 +504,7 @@ void CSelectionManager::RenderSelectionObjects()
   float tblue[4] = {0,0,0.8f,0.5f};
   int sel_mode, count;
   int i;
-  BOUNDING_BOX box;
+  TRIGGER_VOLUME trigger;
 
   if(m_pObj)
   {
@@ -518,12 +518,12 @@ void CSelectionManager::RenderSelectionObjects()
           {
             if(((SELECTION_MODE)sel_mode == TRIGGERS)&&m_bDrawTriggers)
             {
-              gScenario.GetTriggerVolume(i, &box);
+              gScenario.GetTriggerVolume(i, &trigger);
               Selection_BeforeRender(i);
               if(m_pObj[i].bSelected)
-                RenderBox(&box, tyellow);
+                RenderTrigger(&trigger, tyellow);
               else
-                RenderBox(&box, tred);
+                RenderTrigger(&trigger, tred);
               Selection_AfterRender();
             }
             else
@@ -569,8 +569,8 @@ void CSelectionManager::RenderSelectionObjects()
             //Render special cases
             if(((SELECTION_MODE)sel_mode == TRIGGERS)&&m_bDrawTriggers)
             {
-              gScenario.GetTriggerVolume(i, &box);
-              RenderBox(&box, tblue);
+              gScenario.GetTriggerVolume(i, &trigger);
+              RenderTrigger(&trigger, tblue);
             }
             else //Render standard models, spawns, etc
             {
@@ -883,62 +883,69 @@ void CSelectionManager::Cleanup()
   m_ReferenceSelection = -1;
 }
 
-void CSelectionManager::RenderBox(BOUNDING_BOX *pBox, float *pClr)
+void CSelectionManager::RenderTrigger(TRIGGER_VOLUME *pTrigger, float *pClr)
 {
-  float x1,y1,z1,x2,y2,z2;
+  float fo[3];
+  float le[3];
+  float up[3];
   float clr[4] = {0,0,0.8f, 0.5f};
 
   glColor3f(0,1,0);
-	glPointSize(5);
+  glPointSize(5);
   glEnable(GL_BLEND);
   glBegin(GL_QUADS);
 
-  x1 = pBox->min[0];
-  y1 = pBox->min[1];
-  z1 = pBox->min[2];
-  x2 = pBox->min[0] + pBox->max[0];
-  y2 = pBox->min[1] + pBox->max[1];
-  z2 = pBox->min[2] + pBox->max[2];
+  fo[0] = pTrigger->forward[0] * pTrigger->extents[0];
+  fo[1] = pTrigger->forward[1] * pTrigger->extents[0];
+  fo[2] = pTrigger->forward[2] * pTrigger->extents[0];
+
+  le[0] = (pTrigger->up[1] * pTrigger->forward[2] - pTrigger->up[2] * pTrigger->forward[1]) * pTrigger->extents[1];
+  le[1] = (pTrigger->up[2] * pTrigger->forward[0] - pTrigger->up[0] * pTrigger->forward[2]) * pTrigger->extents[1];
+  le[2] = (pTrigger->up[0] * pTrigger->forward[1] - pTrigger->up[1] * pTrigger->forward[0]) * pTrigger->extents[1];
+
+  up[0] = pTrigger->up[0] * pTrigger->extents[2];
+  up[1] = pTrigger->up[1] * pTrigger->extents[2];
+  up[2] = pTrigger->up[2] * pTrigger->extents[2];
 
 
-  glColor4f(pClr[0],pClr[1],pClr[2],pClr[3]);
+  glColor4f(pClr[0], pClr[1], pClr[2], pClr[3]);
   //face 1
-  glVertex3f(x1, y1, z1);
-  glVertex3f(x1, y2, z1);
-  glVertex3f(x1, y2, z2);
-  glVertex3f(x1, y1, z2);
-  
+  glVertex3f(pTrigger->position[0]							, pTrigger->position[1]							, pTrigger->position[2]);
+  glVertex3f(pTrigger->position[0] + fo[0]					, pTrigger->position[1] + fo[1]					, pTrigger->position[2] + fo[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + up[0]			, pTrigger->position[1] + fo[1] + up[1]			, pTrigger->position[2] + fo[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + up[0]					, pTrigger->position[1] + up[1]					, pTrigger->position[2] + up[2]);
+
   //face 2
-  glVertex3f(x2, y1, z1);
-  glVertex3f(x2, y2, z1);
-  glVertex3f(x2, y2, z2);
-  glVertex3f(x2, y1, z2);
+  glVertex3f(pTrigger->position[0] + le[0]					, pTrigger->position[1] + le[1]					, pTrigger->position[2] + le[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + le[0]			, pTrigger->position[1] + fo[1] + le[1]			, pTrigger->position[2] + fo[2] + le[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + le[0] + up[0]	, pTrigger->position[1] + fo[1] + le[1] + up[1]	, pTrigger->position[2] + fo[2] + le[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + le[0] + up[0]			, pTrigger->position[1] + le[1] + up[1]			, pTrigger->position[2] + le[2] + up[2]);
   
-  glColor4f(pClr[0]*0.8f,pClr[1]*0.8f,pClr[2]*0.8f,pClr[3]);
+  glColor4f(pClr[0] * 0.8f, pClr[1] * 0.8f, pClr[2] * 0.8f, pClr[3]);
   //face 3
-  glVertex3f(x1, y1, z1);
-  glVertex3f(x2, y1, z1);
-  glVertex3f(x2, y1, z2);
-  glVertex3f(x1, y1, z2);
-  
+  glVertex3f(pTrigger->position[0]							, pTrigger->position[1]							, pTrigger->position[2]);
+  glVertex3f(pTrigger->position[0] + fo[0]					, pTrigger->position[1] + fo[1]					, pTrigger->position[2] + fo[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + le[0]			, pTrigger->position[1] + fo[1] + le[1]			, pTrigger->position[2] + fo[2] + le[2]);
+  glVertex3f(pTrigger->position[0] + le[0]					, pTrigger->position[1] + le[1]					, pTrigger->position[2] + le[2]);
+
   //face 4
-  glVertex3f(x1, y2, z1);
-  glVertex3f(x2, y2, z1);
-  glVertex3f(x2, y2, z2);
-  glVertex3f(x1, y2, z2);
+  glVertex3f(pTrigger->position[0] + up[0]					, pTrigger->position[1] + up[1]					, pTrigger->position[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + up[0]			, pTrigger->position[1] + fo[1] + up[1]			, pTrigger->position[2] + fo[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + le[0] + up[0]	, pTrigger->position[1] + fo[1] + le[1] + up[1]	, pTrigger->position[2] + fo[2] + le[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + le[0] + up[0]			, pTrigger->position[1] + le[1] + up[1]			, pTrigger->position[2] + le[2] + up[2]);
   
-  glColor4f(pClr[0]*0.6f,pClr[1]*0.6f,pClr[2]*0.6f,pClr[3]);
+  glColor4f(pClr[0] * 0.6f, pClr[1] * 0.6f, pClr[2] * 0.6f, pClr[3]);
   //face 5
-  glVertex3f(x1, y1, z1);
-  glVertex3f(x2, y1, z1);
-  glVertex3f(x2, y2, z1);
-  glVertex3f(x1, y2, z1);
+  glVertex3f(pTrigger->position[0]							, pTrigger->position[1]							, pTrigger->position[2]);
+  glVertex3f(pTrigger->position[0] + up[0]					, pTrigger->position[1] + up[1]					, pTrigger->position[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + le[0] + up[0]			, pTrigger->position[1] + le[1] + up[1]			, pTrigger->position[2] + le[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + le[0]					, pTrigger->position[1] + le[1]					, pTrigger->position[2] + le[2]);
   
   //face 6
-  glVertex3f(x1, y1, z2);
-  glVertex3f(x2, y1, z2);
-  glVertex3f(x2, y2, z2);
-  glVertex3f(x1, y2, z2);
+  glVertex3f(pTrigger->position[0] + fo[0]					, pTrigger->position[1] + fo[1]					, pTrigger->position[2] + fo[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + up[0]			, pTrigger->position[1] + fo[1] + up[1]			, pTrigger->position[2] + fo[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + le[0] + up[0]	, pTrigger->position[1] + fo[1] + le[1] + up[1]	, pTrigger->position[2] + fo[2] + le[2] + up[2]);
+  glVertex3f(pTrigger->position[0] + fo[0] + le[0]			, pTrigger->position[1] + fo[1] + le[1]			, pTrigger->position[2] + fo[2] + le[2]);
   
   glEnd();
   glDisable(GL_BLEND);

@@ -44,7 +44,7 @@ public:
 	int m_ReferenceSelection;
 	void GetReferenceCoordinate(float *pCoord);
 	void EnableTriggerDraw(BOOL bEnable);
-	void RenderBox(BOUNDING_BOX *pBox, float *pClr);
+	void RenderTrigger(TRIGGER_VOLUME *pTrigger, float *pClr);
 	void Cleanup(void);
 	BOOL IsHighDetailEnabled(SELECTION_MODE sel_mode, float cam_dist);
 	void Initialize(UINT version);

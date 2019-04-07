@@ -55,7 +55,7 @@ public:
 	void SetObjectType(SELECTION_MODE sel_mode, int object_index, int new_type);
   CString GetPalletteString(SELECTION_MODE sel_mode, int index);
 	int GetPalletteCount(SELECTION_MODE sel_mode);
-	void GetTriggerVolume(int index, BOUNDING_BOX *pBox);
+	void GetTriggerVolume(int index, TRIGGER_VOLUME *pTrigger);
 	CString GetModelDescription(SELECTION_MODE sel_mode, int index);
 	void GetTagModel(SELECTION_MODE sel_mode, int index, CPcModel **pPcModel, CXboxModel **pXboxModel);
 	void LoadBspInfo(UINT version);
@@ -107,7 +107,7 @@ protected:
   PLAYER_STARTING_PROFILE *m_pStartingProfile;
   MOVE_POSITIONS *m_pMovePositions;
   OBJECT_NAMES *m_pObjectNames;
-  TRIGGER_VOLUMES *m_pTriggerVolumes;
+  TRIGGER_VOLUME *m_pTriggerVolumes;
   BIPED *m_pBiped;
   PALLETTE *m_pBipedRef;
   EQUIP *m_pEquip;
