@@ -380,13 +380,16 @@ typedef struct STRUCT_OBJECT_NAMES
   USHORT unk2;
 }OBJECT_NAMES;
 
-typedef struct STRUCT_TRIGGER_VOLUMES
+typedef struct STRUCT_TRIGGER_VOLUME
 {
   UINT unk;
   char name[32];
-  float unk2[9];
-  BOUNDING_BOX box;
-}TRIGGER_VOLUMES;
+  float unk2[3];
+  float forward[3];
+  float up[3];
+  float position[3];
+  float extents[3];
+}TRIGGER_VOLUME;
 
 typedef struct STRUCT_ACTOR_VARIANT_REF
 {
