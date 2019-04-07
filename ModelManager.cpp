@@ -36,7 +36,7 @@ void CModelManager::Cleanup()
     m_PcModels[i].Cleanup();
   }
 
-  for(i=0; i<m_PcModelCount; i++)
+  for(int i=0; i<m_PcModelCount; i++)
   {
     m_XboxModels[i].Cleanup();
   }

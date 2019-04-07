@@ -5,9 +5,9 @@
 #include "stdafx.h"
 #include "sparkedit.h"
 #include "BspManager.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 
 #ifdef _DEBUG
 #undef THIS_FILE

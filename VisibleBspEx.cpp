@@ -465,7 +465,7 @@ UINT CVisibleBspEx::WriteLightmapsBlock(CFile* pFile, UINT start_offset, UINT ne
 
   //update MATERIAL_SUBMESH_HEADER reflexives
   mesh_index = 0;
-  for(i=0; i<m_SubMeshCount; i++)
+  for(int i=0; i<m_SubMeshCount; i++)
   {
     memcpy(&temp_msh, &m_pMesh[i], sizeof(MATERIAL_SUBMESH_HEADER));
 
@@ -572,7 +572,7 @@ UINT CVisibleBspEx::WriteClustersBlock(CFile* pFile, UINT start_offset, UINT new
   pFile->Seek(m_BspHeader.Clusters.Offset - new_magic, 0);
   pFile->Write(pClusters, m_BspHeader.Clusters.Count*sizeof(BSP_CLUSTER));
 
-  for(c=0; c<m_BspHeader.Clusters.Count; c++)
+  for(int c=0; c<m_BspHeader.Clusters.Count; c++)
   {
     //Write BSP_CLUSTER_PREDICTED_RESOURCE
     pUR1 = (BSP_CLUSTER_PREDICTED_RESOURCE*)pClusters[c].PredictedResources.unknown;
@@ -642,7 +642,7 @@ UINT CVisibleBspEx::WriteClusterDataAndPortals(CFile* pFile, UINT start_offset, 
 
   pFile->Write(pClusterPortals, m_NewBspHeader.ClusterPortals.Count*sizeof(BSP_CLUSTER_PORTAL));
 
-  for(p=0; p<m_NewBspHeader.ClusterPortals.Count; p++)
+  for(int p=0; p<m_NewBspHeader.ClusterPortals.Count; p++)
   {
     pFile->Seek(pClusterPortals[p].Vertices.Offset - new_magic, 0);
     pFile->Write(pClusterPortals[p].Vertices.unknown, pClusterPortals[p].Vertices.Count*sizeof(VERTEX));
@@ -701,7 +701,7 @@ UINT CVisibleBspEx::WriteSoundBlocks(CFile* pFile, UINT start_offset, UINT new_m
     m_pBackgroundSounds[i].SoundTag.unknown = m_NewBspGlobals.new_background_sound_tag.unknown;
   }
 
-  for(i=0; i<m_NewBspHeader.SoundEnvironment.Count; i++)
+  for(int i=0; i<m_NewBspHeader.SoundEnvironment.Count; i++)
   {
     //*(UINT*)&m_pSoundEnv[i].SoundTag.tag = *(UINT*)&m_NewBspGlobals.new_env_sound_tag.tag;
     m_pSoundEnv[i].SoundTag.NamePtr = m_NewBspGlobals.new_env_sound_tag.NamePtr;

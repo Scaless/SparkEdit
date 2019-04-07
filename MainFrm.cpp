@@ -15,7 +15,7 @@
 #include "Render.h"
 #include "SelectionManager.h"
 #include "ImportScenarioTagDlg.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "Scenario.h"
 #include "AnalyzeDataDlg.h"
 
@@ -31,7 +31,7 @@ extern CObjectInfoDlg gInfoDlg;
 extern CRender gRender;
 extern CPerspective *g_pRenderWnd;
 extern CSelectionManager gSelection;
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 extern CScenario gScenario;
 
 /////////////////////////////////////////////////////////////////////////////

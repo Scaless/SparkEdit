@@ -6,7 +6,7 @@
 #include "sparkedit.h"
 #include "XboxModel.h"
 #include "ShaderManager.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "Math.h"
 
 #ifdef _DEBUG
@@ -16,7 +16,7 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 extern CShaderManager gShaderManager;
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 extern PFNGLMULTITEXCOORD2FARBPROC pglMultiTexCoord2fARB;
 
 CXboxModel::CXboxModel()

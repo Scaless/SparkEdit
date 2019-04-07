@@ -5,11 +5,11 @@
 #include "sparkedit.h"
 #include "ImportScenarioTagDlg.h"
 #include "HaloStructDefs.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "Scenario.h"
 #include "ToolView.h"
 
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 extern CScenario gScenario;
 extern CToolView *g_pTools;
 

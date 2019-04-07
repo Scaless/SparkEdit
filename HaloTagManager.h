@@ -39,7 +39,7 @@ typedef struct STRUCT_TAG_LOOKUP
 }TAG_LOOKUP;
 
 
-class CTagManager : public CUtil  
+class CHaloTagManager : public CUtil  
 {
 public:
 	void ExportTagInfo(CString filename);
@@ -61,8 +61,8 @@ public:
   BOOL CheckForTag(UINT val);
   void GetTagXboxModel(UINT tag_id, CXboxModel **ppXboxModel);
 	void GetTagPcModel(UINT tag_id, CPcModel **ppPcModel);
-	CTagManager();
-	virtual ~CTagManager();
+	CHaloTagManager();
+	virtual ~CHaloTagManager();
   void Initialize(CFile *pMapFile, UINT magic, UINT tag_count, UINT base_tag);
   int GetBaseTextureIndex(UINT shader_tag_id);
   void GetShaderTextures(UINT shader_tag_id, int &base_texture_index, 

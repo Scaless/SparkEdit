@@ -5,12 +5,12 @@
 #include "stdafx.h"
 #include "ShaderManager.h"
 #include "ProfileSettings.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "glext.h"
 
 extern COutputPane *g_pOutput;
 extern CProfileSettings gProfile;
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 
 //typedef void (APIENTRY * PFNGLACTIVETEXTUREARBPROC) (GLenum target);
 #define GL_GLEXT_PROTOTYPES

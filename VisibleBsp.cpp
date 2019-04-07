@@ -7,13 +7,13 @@
 #include "VisibleBsp.h"
 #include "OutputPane.h"
 #include "ShaderManager.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "HaloMapFile.h"
 #include "BspManager.h"
 
 extern COutputPane *g_pOutput;
 extern CShaderManager gShaderManager;
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 extern CHaloMapFile HaloMap;
 extern CBspManager gBspManager;
 
@@ -1181,7 +1181,7 @@ void CVisibleBsp::LoadReflectionBlock()
   }
 
   TRACE("Lightmap Reflexive Block\n");
-  for(i=0; i<SectionHdr.Xbox_LightmapVert_ReflexiveCount; i++)
+  for(int i=0; i<SectionHdr.Xbox_LightmapVert_ReflexiveCount; i++)
   {
     if(i < SectionHdr.Xbox_LightmapVert_ReflexiveCount-1)
       temp = pLightmaps[i].Offset - pLightmaps[i+1].Offset;
@@ -1217,7 +1217,7 @@ void CVisibleBsp::DrawClusterPortals()
   glEnable(GL_BLEND);
   glColor4f(0.5,0.5,0,0.3f);
 
-  for(p=0; p<m_BspHeader.ClusterPortals.Count; p++)
+  for(int p=0; p<m_BspHeader.ClusterPortals.Count; p++)
   {
     pPortalVerts = (VERTEX*)pClusterPortals[p].Vertices.unknown;
 

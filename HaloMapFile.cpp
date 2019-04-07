@@ -19,7 +19,7 @@
 #include "BspManager.h"
 #include "ModelManager.h"
 #include "ItemColl.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "WeaponHud.h"
 
 #ifdef _DEBUG
@@ -36,7 +36,7 @@ extern CScenario gScenario;
 extern CToolView *g_pTools;
 extern CBspManager gBspManager;
 extern CModelManager gModelManager;
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 
 /*-------------------------------------------------------------------
  * Name: CHaloMapFile()

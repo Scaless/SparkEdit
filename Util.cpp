@@ -14,10 +14,10 @@
 #include "Util.h"
 #include "direct.h"
 #include "Perspective.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "Bspmanager.h"
 
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 extern CBspManager gBspManager;
 
 #ifdef _DEBUG

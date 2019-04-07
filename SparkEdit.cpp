@@ -17,7 +17,7 @@
 #include "BspManager.h"
 #include "ModelManager.h"
 #include "Frustum1.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "ObjectInfoDlg.h"
 #include "Encounters.h"
 
@@ -54,7 +54,7 @@ CProfileSettings gProfile;
 CBspManager gBspManager;
 CModelManager gModelManager;
 CFrustum gFrustum;
-CTagManager gTagManager;
+CHaloTagManager gTagManager;
 CEncounters gAI;
 
 CString gSE_WorkingDir;

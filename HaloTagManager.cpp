@@ -1,10 +1,10 @@
-// TagManager.cpp: implementation of the CTagManager class.
+// TagManager.cpp: implementation of the CHaloTagManager class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "sparkedit.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "HaloMapFile.h"
 #include "BspManager.h"
 
@@ -18,13 +18,13 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 //-------------------------------------------------------------------
-//  Name: CTagManager()
+//  Name: CHaloTagManager()
 //  Author(s): Grenadiac
 //
 //  Description:
 //    Constructor - initialize class vars here.
 //-------------------------------------------------------------------
-CTagManager::CTagManager()
+CHaloTagManager::CHaloTagManager()
 {
   m_pTagLookup = NULL;
   m_pMapFile = NULL;
@@ -35,14 +35,15 @@ CTagManager::CTagManager()
 }
 
 //-------------------------------------------------------------------
-//  Name: ~CTagManager()
+//  Name: ~CHaloTagManager()
 //  Author(s): Grenadiac
 //
 //  Description:
 //    Cleanup allocations, etc.
 //-------------------------------------------------------------------
-CTagManager::~CTagManager()
-{
+
+// TODO (SCALES): FIX ME
+CHaloTagManager::~CHaloTagManager(){
   Cleanup();
 }
 
@@ -54,7 +55,7 @@ CTagManager::~CTagManager()
 //    Public member function that can cleanup class resources before
 //    the next map is loaded.
 //-------------------------------------------------------------------
-void CTagManager::Cleanup()
+void CHaloTagManager::Cleanup()
 {
   if(m_pTagLookup)
     delete [] m_pTagLookup;
@@ -75,7 +76,7 @@ void CTagManager::Cleanup()
 //  Description:
 //    Init class vars, allocate tag resources.
 //-------------------------------------------------------------------
-void CTagManager::Initialize(CFile *pMapFile, UINT magic, UINT tag_count, UINT base_tag)
+void CHaloTagManager::Initialize(CFile *pMapFile, UINT magic, UINT tag_count, UINT base_tag)
 {
   m_TagCount = tag_count;
   m_BaseTag = base_tag;
@@ -94,7 +95,7 @@ void CTagManager::Initialize(CFile *pMapFile, UINT magic, UINT tag_count, UINT b
 //    Used to verify that a tag_id is valid.  Used in tag search
 //    functionality.
 //-------------------------------------------------------------------
-int CTagManager::CheckForTag(UINT val)
+int CHaloTagManager::CheckForTag(UINT val)
 {
   
   int Tag = -1;
@@ -167,7 +168,7 @@ int CTagManager::CheckForTag(UINT val)
 //  Description:
 //    Return a matching PC model pointer. If none are found, return NULL.
 //-------------------------------------------------------------------
-void CTagManager::GetTagPcModel(UINT tag_id, CPcModel **ppPcModel)
+void CHaloTagManager::GetTagPcModel(UINT tag_id, CPcModel **ppPcModel)
 {
   int tag_index = CheckForTag(tag_id);
   *ppPcModel = NULL;
@@ -185,7 +186,7 @@ void CTagManager::GetTagPcModel(UINT tag_id, CPcModel **ppPcModel)
 //  Description:
 //    Return a matching PC model pointer. If none are found, return NULL.
 //-------------------------------------------------------------------
-void CTagManager::GetTagXboxModel(UINT tag_id, CXboxModel **ppXboxModel)
+void CHaloTagManager::GetTagXboxModel(UINT tag_id, CXboxModel **ppXboxModel)
 {
   int tag_index = CheckForTag(tag_id);
   *ppXboxModel = NULL;
@@ -204,7 +205,7 @@ void CTagManager::GetTagXboxModel(UINT tag_id, CXboxModel **ppXboxModel)
 //    Called during map loading to set up the Tag Lookup table.
 //    This is called once per tag.
 //-------------------------------------------------------------------
-void CTagManager::InitTag(int index, INDEX_ITEM *pItem)
+void CHaloTagManager::InitTag(int index, INDEX_ITEM *pItem)
 {
   ASSERT((index >= 0)&&(index <m_TagCount));
 
@@ -242,7 +243,7 @@ void CTagManager::InitTag(int index, INDEX_ITEM *pItem)
 //  Description:
 //    Future placeholder.  Gets the associated physics for vehicle tag, etc.
 //-------------------------------------------------------------------
-void CTagManager::GetTagPhysics(UINT tag_id)
+void CHaloTagManager::GetTagPhysics(UINT tag_id)
 {
   // future expansion
 }
@@ -255,7 +256,7 @@ void CTagManager::GetTagPhysics(UINT tag_id)
 //    Called after the tags are loaded.  Finds matching subcomponents
 //    of tags, such as models.
 //-------------------------------------------------------------------
-void CTagManager::CompileTagList()
+void CHaloTagManager::CompileTagList()
 {
   int tag;
   UINT *pTemp = NULL;
@@ -298,7 +299,7 @@ void CTagManager::CompileTagList()
 //  Description:
 //    Searches through a buffer to find model and other subtags.
 //-------------------------------------------------------------------
-void CTagManager::FindMatchingSubTags(int tag_index, UINT *pSearchBuf, UINT count)
+void CHaloTagManager::FindMatchingSubTags(int tag_index, UINT *pSearchBuf, UINT count)
 {
   int i;
   int tag_id;
@@ -399,7 +400,7 @@ void CTagManager::FindMatchingSubTags(int tag_index, UINT *pSearchBuf, UINT coun
 //  Description:
 //    Called to init the model pointers during model loading.
 //-------------------------------------------------------------------
-void CTagManager::SetXboxModelTag(UINT tag_id, CXboxModel *pXboxModel)
+void CHaloTagManager::SetXboxModelTag(UINT tag_id, CXboxModel *pXboxModel)
 {
   int tag_index;
 
@@ -418,7 +419,7 @@ void CTagManager::SetXboxModelTag(UINT tag_id, CXboxModel *pXboxModel)
 //  Description:
 //    Called to init the model pointers during model loading.
 //-------------------------------------------------------------------
-void CTagManager::SetPcModelTag(UINT tag_id, CPcModel *pPcModel)
+void CHaloTagManager::SetPcModelTag(UINT tag_id, CPcModel *pPcModel)
 {
   int tag_index;
 
@@ -437,7 +438,7 @@ void CTagManager::SetPcModelTag(UINT tag_id, CPcModel *pPcModel)
 //  Description:
 //    Called to init the model pointers during model loading.
 //-------------------------------------------------------------------
-void CTagManager::DumpTags()
+void CHaloTagManager::DumpTags()
 {
   int tag;
   int count;
@@ -522,7 +523,7 @@ void CTagManager::DumpTags()
 //  Description:
 //    Called to init the model pointers during model loading.
 //-------------------------------------------------------------------
-void CTagManager::CompileReferences()
+void CHaloTagManager::CompileReferences()
 {
   int tag_index;
   int tag;
@@ -552,7 +553,7 @@ void CTagManager::CompileReferences()
 //    based on the shader.  By calling this function, the bitmap tag
 //    is marked as active and the bitmap will be loaded
 //-------------------------------------------------------------------
-int CTagManager::GetBaseTextureIndex(UINT shader_tag_id)
+int CHaloTagManager::GetBaseTextureIndex(UINT shader_tag_id)
 {
   int shader_tag_index = -1;
   UINT texture_tag;
@@ -575,7 +576,7 @@ int CTagManager::GetBaseTextureIndex(UINT shader_tag_id)
   return(texture_index);
 }
 
-void CTagManager::GetShaderTextures(UINT shader_tag_id, 
+void CHaloTagManager::GetShaderTextures(UINT shader_tag_id, 
                                     int &base_texture_index, 
                                     int &detail1_texture_index, 
                                     int &detail2_texture_index)
@@ -619,7 +620,7 @@ void CTagManager::GetShaderTextures(UINT shader_tag_id,
 //  Description:
 //    Returns the string associated with the tag name.
 //-------------------------------------------------------------------
-CString CTagManager::GetTagName(UINT tag_id)
+CString CHaloTagManager::GetTagName(UINT tag_id)
 {
   int tag_index = CheckForTag(tag_id);
   CString name;
@@ -632,7 +633,7 @@ CString CTagManager::GetTagName(UINT tag_id)
   return(name);
 }
 
-BITMAP_STATUS CTagManager::GetTextureStatus(int bitmap_tagid)
+BITMAP_STATUS CHaloTagManager::GetTextureStatus(int bitmap_tagid)
 {
   BITMAP_STATUS BitmapStatus = BITMAP_DISABLED;
   
@@ -647,7 +648,7 @@ BITMAP_STATUS CTagManager::GetTextureStatus(int bitmap_tagid)
   return(BitmapStatus);
 }
 
-CString CTagManager::GetTagDescription(UINT tag_id)
+CString CHaloTagManager::GetTagDescription(UINT tag_id)
 {
   CString desc, temp;
   CString model_subtag_info;
@@ -777,7 +778,7 @@ CString CTagManager::GetTagDescription(UINT tag_id)
   return(desc);
 }
 
-void CTagManager::ActivateLightmap(UINT lightmap_tag)
+void CHaloTagManager::ActivateLightmap(UINT lightmap_tag)
 {
   int tag_index = CheckForTag(lightmap_tag);
 
@@ -789,7 +790,7 @@ void CTagManager::ActivateLightmap(UINT lightmap_tag)
   }
 }
 
-UINT CTagManager::GetHighLevelTagCount(UINT tag_type)
+UINT CHaloTagManager::GetHighLevelTagCount(UINT tag_type)
 {
   UINT count=0;
   int i;
@@ -803,7 +804,7 @@ UINT CTagManager::GetHighLevelTagCount(UINT tag_type)
   return(count);
 }
 
-void CTagManager::GetHighLevelTagInfo(UINT tag_type, int index, UINT *pTagId, UINT *pRawNameOffset, CString *pStr)
+void CHaloTagManager::GetHighLevelTagInfo(UINT tag_type, int index, UINT *pTagId, UINT *pRawNameOffset, CString *pStr)
 {
   int count=0;
 
@@ -811,22 +812,19 @@ void CTagManager::GetHighLevelTagInfo(UINT tag_type, int index, UINT *pTagId, UI
   {
     if(m_pTagLookup[i].tagclass[0] == tag_type)
     {      
-      if(count == index)
-        break;
+		if (count == index) {
+			*pTagId = m_pTagLookup[i].tag_id;
+			*pStr = m_pTagLookup[i].name;
+			*pRawNameOffset = m_pTagLookup[i].RawNameOffset;
+			break;
+		}
 
-      count++;
+		count++;
     }
-  }
-
-  if(count == index)
-  {
-    *pTagId = m_pTagLookup[i].tag_id;
-    *pStr =  m_pTagLookup[i].name;
-    *pRawNameOffset = m_pTagLookup[i].RawNameOffset;
   }
 }
 
-void CTagManager::ExportTagInfo(CString filename)
+void CHaloTagManager::ExportTagInfo(CString filename)
 {
   CStdioFile outfile;
   CString str;

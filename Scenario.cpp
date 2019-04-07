@@ -8,7 +8,7 @@
 #include "CollBsp.h"
 #include "BspManager.h"
 #include "ModelManager.h"
-#include "TagManager.h"
+#include "HaloTagManager.h"
 #include "Encounters.h"
 #include "ObjectInfoDlg.h"
 #include "ToolView.h"
@@ -23,7 +23,7 @@ static char THIS_FILE[]=__FILE__;
 
 extern CBspManager gBspManager;
 extern CModelManager gModelManager;
-extern CTagManager gTagManager;
+extern CHaloTagManager gTagManager;
 extern CObjectInfoDlg gInfoDlg;
 extern CEncounters gAI;
 extern CToolView *g_pTools;
